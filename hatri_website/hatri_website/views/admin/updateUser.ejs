@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include partials/head.ejs %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var role = '';
+            loadAllRole('<%=conf%>','<%=token%>','<%=secu%>', function (item, data) {
+                role += "<option value='" + -1 + "'>Chọn quyền</option>";
+                item.forEach(function (it) {
+                    data[it].forEach(function (items) {
+                        role += "<option value='" + items.role_id + "'>" + items.role_name + "</option>";
+                    });
+                });
+                $("#role_id").html(role);
+                $("#role_id").val(<%=users.role_id %>);
+            });
+
+        });
+    </script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <% include partials/nav.ejs %>
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    Cập nhật người dùng
+                </h1>
+                <ol class="breadcrumb">
+                    <li><a href=""><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+                    <li>
+
+                    </li>
+                </ol>
+            </section>
+            <section class="content">
+                <!-- Start main activity -->
+                <div class="padding-top-bottom"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-primary">
+                            <div class="box-header text-center with-border">
+                                <h3 class="box-title">Cập nhật người dùng</h3>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                                <form class="form-horizontal" id="frmUser" action="/trangchu/trangquantri/sua/<%=users.user_id%>"
+                                    method="post" onsubmit="return confirm('Bạn có chắc chắn thay đổi không ?')">
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4" for="user_userName">Tài
+                                            khoản đăng nhập:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <div class="input-group">
+                                                        <input type="text" style="display: none;" value="<%=users.user_id%>"
+                                                            name="user_id" />
+                                                        <input type="text" class="form-control" placeholder="Nhập tài khoản đăng nhập"
+                                                            name="user_userName" id="user_userName" value="<%=users.user_userName%>" />
+                                                        <div style="color:red;font-weight:bold;" class="input-group-addon">(*)</div>
+                                                    </div>
+                                                    <span id="erroruser_userName" class="error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4" for="user_fullName">Họ
+                                            tên:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Nhập tên người dùng"
+                                                            name="user_fullName" id="user_fullName" value="<%=users.user_fullName%>" />
+                                                        <div style="color:red;font-weight:bold;" class="input-group-addon">(*)</div>
+                                                    </div>
+                                                    <span id="erroruser_fullName" class="error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4" for="role_id">Quyền:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <div class="input-group">
+                                                        <select data-none-results-text="Không tìm thấy từ khóa tìm kiếm"
+                                                            data-live-search="true" class="form-control" name="role_id"
+                                                            id="role_id">
+                                                        </select>
+                                                        <div style="color:red;font-weight:bold;" class="input-group-addon">(*)</div>
+                                                    </div>
+                                                    <span id="errorrole_id" class="error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4" for="user_birthday">Ngày
+                                            sinh:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <div class="input-group">
+                                                        <input type="date" class="form-control" placeholder="Nhập ngày sinh"
+                                                            name="user_birthday" id="user_birthday" value="<%=users.user_birthday%>" />
+                                                        <div style="color:red;font-weight:bold;" class="input-group-addon">(*)</div>
+                                                    </div>
+                                                    <span id="erroruser_birthday" class="error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4" for="user_phone">Điện
+                                            thoại:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Nhập số điện thoại"
+                                                            name="user_phone" id="user_phone" value="<%=users.user_phoneNumber%>" />
+                                                        <div style="color:red;font-weight:bold;" class="input-group-addon">(*)</div>
+                                                    </div>
+                                                    <span id="erroruser_phone" class="error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4" for="user_email">Email:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Nhập email"
+                                                            name="user_email" id="user_email" value="<%=users.user_email%>" />
+                                                        <div style="color:red;font-weight:bold;" class="input-group-addon">(*)</div>
+                                                    </div>
+                                                    <span id="erroruser_email" class="error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-4 col-md-4 col-sm-4" for="user_address">Địa
+                                            chỉ:</label>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" placeholder="Nhập địa chỉ"
+                                                            name="user_address" id="user_address" value="<%=users.user_address%>" />
+                                                        <input type="hidden" class="form-control" placeholder="Trạng thái khóa"
+                                                            name="user_lockStatus" id="user_lockStatus" value="<%=users.user_lockStatus%>" />
+                                                        <div style="color:red;font-weight:bold;" class="input-group-addon">(*)</div>
+                                                    </div>
+                                                    <span id="erroruser_address" class="error"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-5 col-lg-8 col-md-offset-5 col-md-8 col-sm-offset-5 col-sm-8">
+                                            <div class="row">
+                                                <div class="col-md-8  col-xs-12">
+                                                    <input type="submit" class="btn btn-primary" name="btnCapNhat" value="Cập nhật" />
+                                                    <input type="reset" class="btn btn-primary" name="btnDatLai" value="Đặt lại" />
+                                                    <span style="color:red;font-weight:bold;">(*)</span><span> là bắt
+                                                        buộc</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="footer-title main-footer">
+            <div class="pull-right hidden-xs">
+                <b>Phiên bản</b> 1.0
+            </div>
+            <strong>Copyright &copy; 2018 <a href="">Mobifone 9</a>.</strong> All rights
+            reserved.
+        </footer>
+        <% include partials/scripts.ejs %>
+        <!-- Control Sidebar -->
+        <% include partials/sidebar.ejs %>
+    </div>
+    <!-- ./wrapper -->
+</body>
+<!-- jQuery 2.2.3 -->
+
+</html>
